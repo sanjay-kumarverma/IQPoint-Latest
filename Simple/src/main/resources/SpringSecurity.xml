@@ -1,0 +1,80 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+	
+
+
+<!-- 	For BASIC or FORM-BASED login 
+       <http use-expressions="false" >
+		<intercept-url pattern="/resteasy/springjpatest/*" access="ROLE_USER" />
+		<http-basic/> 
+		<form-login/>
+
+		<form-login
+		    login-page="/LoginForm.jsp" 
+			authentication-failure-url="/LoginForm.jsp?error"
+			login-processing-url="/j_spring_security_check"
+            username-parameter="username"
+			password-parameter="password" />
+		<csrf />	
+	</http>
+
+	<authentication-manager>
+	  <authentication-provider>
+	    <password-encoder hash="bcrypt" />
+	    <user-service>
+		<user name="sanjay" password="$2a$10$ULKqogHln2l4lRKU132XYO8ZjzImdrkITuLn..tJuhagCl1tvQcli" authorities="ROLE_USER" />
+	    </user-service>
+	  </authentication-provider>
+	</authentication-manager> 
+	
+	For BASIC or FORM-BASED login  ends -->
+	
+	<!--  FORM-BASED login with database -->
+       <http use-expressions="false" >
+		<!-- <intercept-url pattern="/resteasy/qb/*" access="ROLE_STUDENT" /> -->
+		     <intercept-url pattern="/LoginForm.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/ilsWebPages/registration/registration.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/resteasy/qb/userservice/registerUser" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/js/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/lib/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		     <intercept-url pattern="/**" access="ROLE_SUPERUSER,ROLE_TEACHER,ROLE_ORGANIZATION,ROLE_STUDENT" />
+		     <!-- <intercept-url pattern="/resteasy/qb/**" access="ROLE_SUPERUSER,ROLE_TEACHER,ROLE_ORGANIZATION,ROLE_STUDENT" /> -->
+<!-- 		<http-basic/> 
+		<form-login/> -->
+
+        <session-management invalid-session-url="/SessionTimeout.html" session-authentication-error-url="/SessionTimeout.html">
+                  <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
+        <logout delete-cookies="JSESSIONID" />
+        
+
+		<form-login
+		    login-page="/LoginForm.jsp" 
+			authentication-failure-url="/LoginForm.jsp?error=Username or password is not correct" 
+			default-target-url="/Welcome.jsp" always-use-default-target="true"
+			login-processing-url="/j_spring_security_check" 			
+            username-parameter="username"
+			password-parameter="password" 
+		  />
+		<logout logout-success-url="/ilsWebPages/index.html" invalidate-session="true" logout-url="/logout"/>
+		<!-- enable csrf protection -->
+		<csrf/>
+	</http>
+
+	<authentication-manager>
+	  <authentication-provider>
+		<jdbc-user-service data-source-ref="dataSource"
+		  users-by-username-query= "select email,password,not isdeleted as enabled from ilsuser where email=?"
+		  authorities-by-username-query= "select a.email,b.role from ilsuser a, ilsrole b where a.roleid=b.id and a.email=?" />
+	  </authentication-provider>
+	</authentication-manager>
+	
+
+</beans:beans>

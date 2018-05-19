@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>iQB</title>
+<!--   <link  rel="stylesheet" type="text/css" href="../css/main.css" media="all"> -->
+  <link  rel="stylesheet" type="text/css" href="/Simple/css/index.css" media="all">
+</head>
+<body>
+	    <header>
+			  <hgroup>
+			    <h1>The Intelligent Questions Bank</h1>
+			 </hgroup>  
+			 <nav>
+			    <ul>
+				      <li><a href="#">Home</a></li>
+				      <li><a href="#">Resources</a></li>
+				      <li><a href="/Simple/resteasy/qb/showusers">My Account</a></li>
+				      <li><a href="#">About</a></li>
+				      <li><a href="#">Contact</a></li>
+			    </ul>
+			 </nav>
+	     </header>	 
+		   <section>
+             <article>
+
+				<h2>Introduction</h2>
+				
+				<p>In this article I'll describe the World Wide Web from a high level perspective, focusing on how a web page is request and delivered from a 
+				   web server to a web browser.  Then, I want to talk about web browsers, how they interpret the HTML you write, 
+				   differences between browsers, what are standards and to paraphrase the old joke "if Standards are so great, why are there so many of them?" 
+				    Finally, I'll talk about the thought process behind HTML5 and CSS3, why they were introduced and what they hope to achieve.</p>
+				
+		   
+				<figure>
+				  <img src="/Simple/images/idb.jpg" alt="" height="400px" width="400px">
+				  <!-- <figcaption>The intelligent question bank is repository of practice questions and model answers that allows students to practice and learn in interactive fashion.</figcaption> -->
+				</figure>		   
+
+
+				<p>Once the requested document is delivered through the network back to requestor, that document is loaded into the web browser.  The browser parses through the HTML and decides how to render (or rather, display) its content and appearance on the computer screen.</p>
+				
+				<h3>What Are Domain Names?</h3>  
+				
+				<p>The request that users type into web browsers originally looked something like this:<br>
+				<br>
+				http://157.123.23.44/index.htm</p>
+				
+				<p>Why the series of numbers?  Each computer on this network was assigned an address, called an Internet Protocol Address, or IP Address.  This was assigned through a lower-level protocol called Transmission Control Protocol / Internet Protocol, or rather, TCP/IP.  It was the foundational technology that allowed requests to be routed to the appropriate server that contained a given resource, or rather, web page.  However, because the IP address for a computer would change occasionally for a given computer or institution, they devised a system called the Domain Name System, or rather, the DNS, to turn a friendly name like:<br>
+				<br>mit.edu<br><br>
+				... into the actual "location", like:<br>
+				<br>
+				18.72.0.3</p>
+				
+				<p>A system of top-level Domain Names was created ... .edu for educational institutions, .mil for Military, .gov for Government, .net for Network related resources, .org for Non-profit organizations, .com for Commercial organizations, etc.  Later, other countries and a plethora of top-level domains were added and others for commercial and other interests.</p>
+				
+				<p>The web browser will query databases of domain names and their associated IP Addresses and will translate the requests automatically for the user without his or her knowledge.  Typically, each Internet Service Provider has a Domain Name System server that can be queried for resolving Domain Names into IP Addresses.  The databases that contain this Domain Name information stay synchronized around the globe, although sometimes the synchronization process can take minutes or hours to complete.</p>
+				
+				<h3>The Purpose for Standards Groups</h3>
+				
+				<p>At every step of the way, one or more organizations were formed to help identify standards for these technologies comprised of experts and luminaries who were pushing these technologies forward.  They would meet both virtually and in person to define and discuss the merits of adding new features to a given standard and would encourage organizations who were creating hardware and software to follow these standards so that products from different vendors could work together seamlessly.  Perhaps one of the most influential and important standards body you will hear about is the W3C, or rather, the World Wide Web Consortium.  They were one of the groups responsible for the latest version of HTML, version 5.  Another is the WHATWG, or rather, the Web Hypertext Application Technology Working Group, which is comprised of a subset of the W3C and several additional experts and organizations that have a  vested interest in the vitality of the World Wide Web.  The background of HTML5, the previous versions of HTML, as well as the standards organizations involved is fascinating because you get a peek into both the process and the politics of these organizations.</p>
+				
+				<h2>Recap of the World Wide Web Technical Overview</h2>
+				
+				<p>From a purely technical perspective, you should now understand a few things:</p>
+				
+				<ol>
+				<li>First of all, hopefully you now have an answer to the question everyone first starting out asks: "why the heck did they make URLs so convoluted?  Wouldn't it be easier to just type in 'microsoft' instead of 'http://www.microsoft.com'?"  There's an evolution of technologies, and furthermore, it was never intended for use by the masses.  At some point commercialized and individual access to the internet dwarfed the intended use, however the technologies created 30 years ago are still in play.</li>
+				
+				<li>Second, hopefully you will begin see the purpose of things like http:// ... in which you are saying you want to access a specific channel of traffic, HTTP, or rather, World Wide Web traffic, as opposed to FTP (File Transfer Protocol) for working with large files, SMTP (Simple Mail Transfer Protocol) for sending email, and so on.</li>
+				
+				<li>Third, hopefully you see the purpose of .com, .edu, .net and so on ... at least, you understand the original purpose, and you understand how those domain names are translated into the actual IP Addresses that are utilized by routers to move traffic around the internet to it's intended destination.</li>
+				
+				<li>Fourth, hopefully you can see that the specifics of HTML - and all other standards - are decided on by a body of individuals who understand what is needed and propose and debate the merits of adding or removing parts of a given specification.  You should also see the purpose for these standards - so that organizations creating hardware and software to support the World Wide Web can achieve a high degree of interoperability.</li>
+				
+				<li>Fifth, hopefully you can see the role that each component plays in the exchange of documents and other resources ... the web browser is responsible for interacting with the end user who requests a document by typing in a web address or clicks on a hyperlink.  It also packages up that request and begins the process of requesting the document from it's host, the computer called the web server.  The message is packaged using the HTTP protocol, which you can think of as an electronic envelope geared towards stateless request / response style transmissions between two computers.  Routers are special devices that know how to interpret the address encoded in electronic envelopes, or rather, the HTTP messages, and route them closer to their ultimate destination.  A web server is merely a computer at a given web address that is listening for HTTP requests, and if the address is valid, returns the requested document or resource using the same HTTP message addressing as a response.</li>
+				</ol>
+				
+				<h2>One Final Note About Our Overview</h2>
+				
+				<p>Let me add that (a) I distilled this down and over-simplified it to keep it simple at a high level.  You could spend months or years learning more about any single component of what I just described in a few sentences, and (b) after 30 years of use and technological advancement, web development has gotten a LOT more sophisticated.  And most pertinent to this series of lessons, web development techniques and technologies have become much more sophisticated.  While most of the underpinnings are still in play, some of the technologies have been refined and expanded.</p>  
+				
+				<p>Take HTML for example.  In early versions, HTML was called on to do "double-duty" ... it expressed both the structure of a document as well as its aesthetic layout.  In other words, the same syntax defined both the fact that there would be fie paragraphs separated by a series of headings indicating the relationship of those paragraphs to each other, AS WELL AS the font types, colors and sizes, the border around the web page, the rounded corners and other adornments to make the web page attractive.  While scientists and academicians may not be overly concerned about the aesthetics, at least not 30 years ago, now the World Wide Web is used for eCommerce, web applications that mimic desktop applications, gaming and more.</p>  
+				
+				<p>More recently, these two responsibilities - of structure and presentation - have been split in two ... HTML should define the structure of the document, and Cascading Style Sheets should control the presentation, or rather, the style or aesthetic qualities of a web page.  We'll see how this separation of responsibilities plays out throughout this course.</p>
+				</article>
+				
+				
+				
+				
+				<aside>If you have a captive audience, the experience is a little different.  For example, In Windows 8, HTML5 developers 
+				       can rely on Internet Explorer 10's expanded HTML5 support to build user interfaces that run as Metro-style applications 
+				       utilizing the WinRT API.  In this case, you know for a fact where your HTML5 will be rendered and by whom, and you are 
+				       free to use the full set of HTML5 features IE10 supports without having to worry about other browser vendors and version.  
+				       Another example might be that someday you're building web-based intranet applications that will run inside of your enterprise 
+				       on an Intranet.  In this case, your IT department may have standardized on a specific web browser.  If this is the case, you 
+				       are free to use the HTML features supported by that specific vendor and version of web browser.</aside>
+				
+				<h2>Conclusion</h2>
+				
+				<p>Hopefully you can see the issues surrounding HTML5 and CSS3 with regards to their support by various versions and vendors of web browsers and two different thought processes on how to incorporate HTML5 into your own work.</p>
+   
+		   </section>
+		   <footer>
+                <small>Copyright © 2012-2014 SV</small>
+		   </footer>
+
+</body>
+</html>

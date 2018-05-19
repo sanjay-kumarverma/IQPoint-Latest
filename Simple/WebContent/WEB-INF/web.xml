@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>ILS</display-name>
+  <!-- Application server based security settings -->
+  
+ <!-- <security-constraint>
+    <display-name>Restricted GET Request</display-name>
+    <web-resource-collection>
+        <web-resource-name>Restricted GET request to student data</web-resource-name> -->
+<!-- Restricting access only to this URL for the GET method -->
+<!--         <url-pattern>/resteasy/springjpatest/*</url-pattern>
+        <http-method>GET</http-method>
+    </web-resource-collection>
+     <auth-constraint>
+        <role-name>admin</role-name>
+        <role-name>manager</role-name>
+    </auth-constraint> -->
+    
+ <!--    <user-data-constraint>
+                <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+</security-constraint>
+
+     <login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>ApplicationRealm</realm-name>
+	</login-config>
+
+ 	<login-config>
+	  <auth-method>FORM</auth-method>
+	  <realm-name>ApplicationRealm</realm-name>
+	  <form-login-config>
+	    <form-login-page>/LoginForm.html</form-login-page>
+	    <form-error-page>/LoginError.html</form-error-page>
+	  </form-login-config>
+	</login-config> 
+	
+	<security-role>
+		<role-name>admin</role-name>
+	</security-role>
+	<security-role>
+		<role-name>manager</role-name>
+	</security-role> -->
+
+  <!-- Application server based security settings ends -->
+
+	
+<!-- Auto scan REST service -->
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+<!-- RestEasy Bootstrap -->
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+    </listener>
+ 
+     <!-- Spring Bootstrap -->
+	   <context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>/WEB-INF/classes/ApplicationContext.xml, /WEB-INF/classes/SpringSecurity.xml</param-value>
+	  </context-param>
+
+     <listener>
+		<listener-class>
+                        org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+	</listener> 	  
+  
+<!--       <listener>
+        <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
+      </listener> -->
+  
+    <!-- RestEasy Servlet -->
+    <servlet>
+        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    </servlet>
+ 
+    <servlet-mapping>
+        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <url-pattern>/resteasy/*</url-pattern>
+    </servlet-mapping>
+    
+    	
+    <!-- this is mandatory, if url-pattern is other than /* -->
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/resteasy</param-value>
+    </context-param>
+    
+  <welcome-file-list>
+    <welcome-file>ilsWebPages/index.html</welcome-file>
+  </welcome-file-list>    
+
+	<!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
+		
+	</filter>
+
+
+    <filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+    <!-- This listner is used to handle concurrent sessions. User is allwed to open only one session from one browser -->	
+	<listener>
+	     <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+
+<!-- 	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/resteasy/springjpatest/*</url-pattern>
+	</filter-mapping> -->
+<!-- 	
+
+ 	<servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
+	</servlet> 
+
+	<servlet-mapping>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	 </servlet-mapping> -->
+	 
+	 
+
+
+	  
+</web-app>

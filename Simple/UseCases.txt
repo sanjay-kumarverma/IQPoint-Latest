@@ -1,0 +1,24 @@
+1. Show all exams for a specific user & specific subject : All the exams, sorted by ExamDate with latest on top and its execution status 
+                                                           is displayed. Exam already attempted and pass shown in green,
+                                                            not attempted in blue, attempted and fail in red.
+2. User clicks on Exam : A accordian opens and shows score card (with section wise max and score, followed by total and percentage),
+                         clickable icons for, question paper preview (with score), publishing paper in pdf 
+                         
+In case logged-in user is a teacher, he should be able to see all his students and quick dashboard for all at a time. For 
+detailed information on each student, teacher will select the student, and interface will then show all information in context of 
+selected student.
+
+
+
+
+1. All exams for a specific user and subject are listed when specific subject is selected.QP details are shown on click. This is a 
+   scenario of student, where he is seeing his own exams.
+1.1 Passed, Failed or not-attempted flag is displayed.
+1.2 Another scenario is when Teacher is logged in. Tree will now show User(Teacher) as root and below that next level is classes. 
+    Teacher selects a particular class, a list of students is shown in tree, with photo icon displayed (teacher can click on icon)
+    to expand. Teacher selects the student and his profile is shown in content pane.
+    1.2.1 Clicking on "Subjects" shows a dashboard with student names and exam summary, like exams assigned, attempted, passed, failed.
+          different sorting and searching options can be displayed.
+    1.2.2 When user clicks on specific subject, various exams are listed, with associated question paper. When clicks on listed exam
+          list of students is displayed with indicator whether exam is attempted, failed, passed, attempted on etc. 
+          Filter and sorting feature can be provided.

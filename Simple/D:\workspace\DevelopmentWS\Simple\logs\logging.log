@@ -1,0 +1,16 @@
+2017-12-17 12:04:28 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+2017-12-17 12:04:28 INFO  Version:41 - HHH000412: Hibernate Core {4.2.15.Final}
+2017-12-17 12:04:28 INFO  Environment:238 - HHH000206: hibernate.properties not found
+2017-12-17 12:04:28 INFO  Environment:345 - HHH000021: Bytecode provider name : javassist
+2017-12-17 12:04:29 WARN  DriverManagerConnectionProviderImpl:98 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2017-12-17 12:04:29 INFO  DriverManagerConnectionProviderImpl:134 - HHH000115: Hibernate connection pool size: 20
+2017-12-17 12:04:29 INFO  DriverManagerConnectionProviderImpl:137 - HHH000006: Autocommit mode: true
+2017-12-17 12:04:29 INFO  DriverManagerConnectionProviderImpl:151 - HHH000401: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://127.0.0.1:5432/ILS]
+2017-12-17 12:04:29 INFO  DriverManagerConnectionProviderImpl:156 - HHH000046: Connection properties: {password=****, autocommit=true, release_mode=auto, user=postgres}
+2017-12-17 12:04:29 WARN  JdbcServicesImpl:169 - HHH000342: Could not obtain connection to query metadata : FATAL: database "ILS" does not exist
+2017-12-17 12:04:29 INFO  Dialect:130 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2017-12-17 12:04:29 INFO  LobCreatorBuilder:85 - HHH000422: Disabling contextual LOB creation as connection was null
+2017-12-17 12:04:29 INFO  TransactionFactoryInitiator:73 - HHH000268: Transaction strategy: org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
+2017-12-17 12:04:29 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2017-12-17 12:04:30 WARN  SqlExceptionHelper:144 - SQL Error: 0, SQLState: 3D000
+2017-12-17 12:04:30 ERROR SqlExceptionHelper:146 - FATAL: database "ILS" does not exist
