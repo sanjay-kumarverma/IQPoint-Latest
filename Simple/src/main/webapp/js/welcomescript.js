@@ -120,6 +120,7 @@ function setSplitterAndTree()	{
 				
 				$('#jstree').on("changed.jstree", function (e, data) {
 					  var clickedData = data.selected;
+					  //console.log(clickedData);
 					  $('#clickData').attr("title",clickedData);
 					  $('#clickData').text($('#'+clickedData).attr("value"));
 					  if (clickedData=="root")
@@ -158,16 +159,30 @@ function setSplitterAndTree()	{
 				       }
 					  else if (clickedData=="People")  { 
 						  $('#treecontents').load('ilsWebPages/people/People.jsp');
-				       }					  
+				       }	
+					  else if (clickedData=="Masters")  { 
+						  if (userRole=="ROLE_TEACHER" || userRole=="ROLE_ORGANIZATION") {
+						       $('#treecontents').load('ilsWebPages/misc/NotAuthorized.jsp');
+						  }
+					  }
+					  else if (clickedData=="ClassLevel" || clickedData=="Subject" 
+						       || clickedData=="ExamType" || clickedData=="QuestionType")  { 
+
+						  if (userRole=="ROLE_TEACHER" || userRole=="ROLE_ORGANIZATION") {
+						       $('#treecontents').load('ilsWebPages/misc/NotAuthorized.jsp');
+						  }
+				       }	
 					  
-					});
+					  });
 				
 			    if (userRole=="ROLE_STUDENT") {
-			    	$('#QuestionBank').hide();
-			    	$('#ScheduledExams').hide();
-			    	$('#Management').hide();
+					    	$('#QuestionBank').hide();
+					    	$('#ScheduledExams').hide();
+					    	$('#Management').hide();
 			        }
 			    
+			    
+	    
            
 	
    }
@@ -206,8 +221,11 @@ function setSplitterAndTree()	{
 	
 	function setEvents() {
 		$('#editProfile').click(function(){
-			$('#level').removeAttr('disabled');
-			$('#studiesin').removeAttr('disabled');
+			if (userRole=="ROLE_STUDENT") { // for teachers and organization level attribute is not applicable
+			    $('#level').removeAttr('disabled');
+				$('#studiesin').removeAttr('disabled');
+			}
+
 			 $('input').removeAttr('disabled');
 			 $('textarea').removeAttr('disabled');
 			 $('#pro-butloadphoto').removeAttr('disabled');

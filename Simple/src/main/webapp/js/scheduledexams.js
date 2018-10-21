@@ -43,7 +43,7 @@ $(document).ready(function(){
 				    $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#se-level');
 				 } else if (userRole=="ROLE_TEACHER" && userLevelName == level.level) {
 					 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#se-level'); 
-				 } else if (userRole=="ROLE_SUPERUSER"){
+				 } else if (userRole=="ROLE_SUPERUSER" || userRole == "ROLE_ORGANIZATION"){
 					 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#se-level'); 
 				 }
 				 
@@ -100,8 +100,8 @@ $(document).ready(function(){
 			var dateTo=$('#se-dateTo').val();
 			var freeText=$('#se-freeText').val().toUpperCase();
 			
-			         var searchData={"userid":userId,"level":level,"subject":subject,"examtype":examType,"datefrom":dateFrom,"dateto":dateTo,"freetext":freeText,"_csrf":_csrf};
-			         //console.log(searchData);
+			         var searchData={"userid":userId,"level":level,"subject":subject,"examtype":examType,"datefrom":dateFrom,"dateto":dateTo,"freetext":freeText,"userrole":userRole,"_csrf":_csrf};
+			         console.log(searchData);
 		           $.post("resteasy/qb/scheduledexam/searchScheduledExams",searchData)
 		    		
 		            .done( function(data,status,xhr){ 

@@ -2,6 +2,8 @@ $(document).ready(function(){
 	
 		//disabling elements on question bank load
 	     var userId=$('#root').attr("value");
+	     var userLevelId=$('#userLevelId').val();
+	     var userLevelName=$('#userLevelName').val();	     
 	     var userRole=$('#userRole').val();
 	     var qpIndex=1;
 	     var currentSearchedQuestionList=0;
@@ -1013,7 +1015,7 @@ $(document).ready(function(){
 						   imageUrlStr='<td class="w3-text-blue">Image </td><td class="w3-text-black"><img id="imageUrl'+value.id+'" src="'+value.imageUrl+'" style="width:10%;height:8%"/></td></tr>';
 					   
 					   var topicstr="";
-					   if (questionTypeVal=="1") {
+					   if (questionTypeVal=="1" || questionTypeVal=="2" ) {
 						   topicstr='<p class="w3-text-blue"><table id="questionTable" class="w3-table-all w3-hoverable w3-small w3-center">';
 						   topicstr+='<tr><td class="w3-text-blue">Question</td><td class="w3-text-black"><input type="text" id="ques'+value.id+'" value="'+value.question+'"  size="70"/></td><td></td><td></td></tr>';
 						   topicstr+='<tr><td class="w3-text-blue">Options</td><td class="w3-text-black"><input type="text" id="optionFirst'+value.id+'" value="'+value.optionFirst+'" size="50"/></td><td></td><td></td></tr>';
@@ -1064,7 +1066,7 @@ $(document).ready(function(){
 							
 							//var questionTypeVal=$( "#qb-questionType option:selected").val();
 							//console.log(questionTypeVal);
-							if (questionTypeVal=="1") { //if question type is multiple choice single select
+							if (questionTypeVal=="1" || questionTypeVal=="2" ) { //if question type is multiple choice single select
 								
 								$('#'+divid).find('input').removeAttr('disabled'); 
 								
@@ -1518,6 +1520,25 @@ $(document).ready(function(){
 		});  	
     }		
 		
+//	function populateLevel() {
+//		$('#level > option').remove();
+//		$.get('resteasy/qb/questionbank/levels')
+//		 .done(function(levels){
+//			 var jsonLevels = JSON.parse(levels);
+//			 $('<option value="" disabled selected>Choose Class/Level</option>').appendTo('#level');
+//			 $.each(jsonLevels,function(index,level) {
+//				 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#level');
+//			 });
+//		 })
+//		 .fail(function(){
+//	           var msg='<p>There was some problem getting classes / levels information. Please retry after some time.</p>';
+//	           $('#examErrorMessage > p').remove();
+//	           $(msg).appendTo('#examErrorMessage');	 	        	  
+//	 	       document.getElementById('error').style.display='block';				
+//		});
+//		
+//	}
+	
 	function populateLevel() {
 		$('#level > option').remove();
 		$.get('resteasy/qb/questionbank/levels')
@@ -1525,7 +1546,15 @@ $(document).ready(function(){
 			 var jsonLevels = JSON.parse(levels);
 			 $('<option value="" disabled selected>Choose Class/Level</option>').appendTo('#level');
 			 $.each(jsonLevels,function(index,level) {
-				 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#level');
+				 //console.log("level id "+level.id);
+				 if (userRole=="ROLE_STUDENT" && userLevelId == level.id) {
+				    $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#level');
+				 } else if (userRole=="ROLE_TEACHER" && userLevelName == level.level) {
+					 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#level'); 
+				 } else if (userRole=="ROLE_SUPERUSER"){
+					 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#level'); 
+				 }
+				 
 			 });
 		 })
 		 .fail(function(){

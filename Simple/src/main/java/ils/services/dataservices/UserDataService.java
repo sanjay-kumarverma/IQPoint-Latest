@@ -464,7 +464,8 @@ public class UserDataService {
 			     @FormParam("city") String city,
 			     @FormParam("state") String state,	
 			     @FormParam("zip") String zip,
-			     @FormParam("otherinfo") String otherinfo)			     
+			     @FormParam("otherinfo") String otherinfo,
+	             @FormParam("xyz") String password)
 	{
 	  
 	  String jsonstr="";
@@ -488,6 +489,8 @@ public class UserDataService {
 		       		userobj.setLastName(lastName);
 		       		userobj.setEmail(email);
 		       		userobj.setPhone(phone);
+		       		if (!password.equals("noChange"))
+		       			userobj.setPassword(password);
 		       		userobj.setUserLevel(dataRep.findLevelById(studiesIn));
 		       		
 		       		userobj.getUserProfile().setBloodGroup(bloodGroup);
@@ -506,7 +509,9 @@ public class UserDataService {
 		       		userobj.getAddress().setState(state);
 		       		userobj.getAddress().setZip(zip);
 		       	    userobj.setComments(otherinfo);
-		       		userobj.setRecordStatus(getRecordStatus());	    		  
+		       	    //Long updBy = userobj.getRecordStatus().getUpdatedBy();
+		       		userobj.getRecordStatus().setUpdatedOn(getRecordStatus().getUpdatedOn());
+		       		
 
 				    //Persisting user to database 
 				    userobj=dataRep.updateUser(userobj);
@@ -605,7 +610,7 @@ public class UserDataService {
 		  java.sql.Timestamp dt = new java.sql.Timestamp(timeinmillis);
 		  
 		  rs.setUpdatedOn(dt);
-		  rs.setUpdatedBy(new Long(10000));
+		  rs.setUpdatedBy(new Long(10000));  //while updating user profile updatedBy field should not be updated as it represents owwnership
 		  rs.setDeleted(false);
 		  
 		  return rs;

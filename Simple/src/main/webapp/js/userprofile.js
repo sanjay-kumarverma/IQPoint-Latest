@@ -2,6 +2,13 @@
 	     
 	            var userId=$('#root').attr("value");
 	            var _csrf = $("input[name='_csrf']").val();
+	            var userRole=$('#userRole').val();
+	            
+	            if (userRole==="ROLE_TEACHER" || userRole==="ROLE_SUPERUSER" || userRole==="ROLE_ORGANIZATION") {
+	            	    $('#hideForRole').hide();
+	            }
+	            
+
 	  
 				$('#userProfileForm').validate({
 				    errorPlacement: function (error, element) {
@@ -68,11 +75,36 @@
 					submitHandler: function(form) {
 						showProgressBar("Updating user profile, please wait...");
 						//alert("coming to submit handler");
-						updateUser();
+						//updateUser();
+			            chkForPassword();
 						hideProgressBar();
 		           }
 				});	  	   
 		    // }
+				
+		   function chkForPassword() {
+			   var password= $("#passwd").val(); 
+			   var confirmPassword = $("#confirmPasswd").val(); 
+
+			   if (password!==null && confirmPassword!==null) {
+				   
+				   password=password.trim();
+				   confirmPassword=confirmPassword.trim();
+				   if (password==confirmPassword && (password.length >=6 && password.length <=12 )) {
+					   updateUser();
+				   }
+				   else  {
+			           var msg='<p>Password provided by you does not match confirm password or password should be between 6 to 12 characters. Try again.</p>';
+			           $('#welcomeAlertMessage > p').remove();
+			           $(msg).appendTo('#welcomeAlertMessage');	 	        	  
+			 	       document.getElementById('alert').style.display='block'; 		
+				   }
+			    }
+			   else {
+                   updateUser();				  
+			   }
+			  
+		   }
 		   
 		   function updateUser()
 		   {
@@ -99,10 +131,19 @@
 			   var state=$('#state').val();
 			   var zip=$('#zip').val();
 			   var otherinfo=$('#otherinfo').val();
+			   var password = $('#passwd').val();
+			   var confirmPassword = $('#confirmPasswd').val();
+			       
 			   
-			   var profiledata={"firstName":firstname,"lastName":lastname,"email":email,"phone":phone,"bloodgroup":bloodgroup,"fathername":fathername,"fatherphone":fatherphone,"fatheremail":fatheremail,
-					            "mothername":mothername,"motherphone":motherphone,"motheremail":motheremail,"admission-no":admissionNo,"section":section,"studiesin":studiesin,"level":level,
-					            "street":street,"city":city,"state":state,"zip":zip,"otherinfo":otherinfo,"_csrf":_csrf};
+			   if (password===null || confirmPassword===null) { 
+				    password="noChange"
+			   }
+			   
+				   var profiledata={"firstName":firstname,"lastName":lastname,"email":email,"phone":phone,"bloodgroup":bloodgroup,"fathername":fathername,"fatherphone":fatherphone,"fatheremail":fatheremail,
+						            "mothername":mothername,"motherphone":motherphone,"motheremail":motheremail,"admission-no":admissionNo,"section":section,"studiesin":studiesin,"level":level,
+						            "street":street,"city":city,"state":state,"zip":zip,"otherinfo":otherinfo,"xyz":password,"_csrf":_csrf};
+			   
+			   
 			   console.log(profiledata);
 		       //$.post("resteasy/qb/updateUserProfile",$('#userProfileForm').serialize())
 			   $.post("resteasy/qb/updateUserProfile",profiledata)

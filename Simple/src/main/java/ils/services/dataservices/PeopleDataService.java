@@ -95,7 +95,36 @@ public class PeopleDataService {
 		
 	}	
 	
-	
+	@POST
+    @Path("/people/updateLevel")
+    @Produces(MediaType.TEXT_HTML)	
+	public Response updateUserLevel( @FormParam("userid") String userid,
+								     @FormParam("level") String levelid)
+	{
+
+		UserPlainV2 up=null;
+		PeopleDataRepository peopleRep= (PeopleDataRepository)SpringApplicationContext.getBean("PeopleDataAccessBean");
+		try {
+			up=peopleRep.updateUserLevel(userid,levelid);
+		    
+		} 
+		catch (Exception ex)
+		{
+	      	  ex.printStackTrace();
+	      	  logger.error("PeopleDataService-Error updating user level, cause ->"+ ex.getMessage());
+	      	  
+	  		  return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).build(); 			
+		}
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+		
+		String jsonstr= gson.toJson(up);
+		
+		System.out.println(jsonstr);
+		
+		return Response.status(200).entity(jsonstr).build();
+		
+	}	
 		
 	
 	

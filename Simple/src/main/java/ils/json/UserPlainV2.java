@@ -10,7 +10,7 @@ public class UserPlainV2 implements java.io.Serializable {
 	private static final long serialVersionUID = 6484927094536897156L;
 
 	private String id;
-	
+	private String photoUrl;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -24,6 +24,13 @@ public class UserPlainV2 implements java.io.Serializable {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
 	public String getFirstName() {
 		return firstName;

@@ -39,7 +39,8 @@ public class ScheduledExamsDataService {
 												@FormParam("examtype") String examTypeId,
 												@FormParam("datefrom") String dateFrom,
 												@FormParam("dateto") String dateTo,
-												@FormParam("freetext") String freeText)
+												@FormParam("freetext") String freeText,
+												@FormParam("userrole") String userRole)
 	{
 		
 		
@@ -59,7 +60,7 @@ public class ScheduledExamsDataService {
 		List<ExamPlainV2> qList=null;
 		ScheduledExamsDataRepository exRep= (ScheduledExamsDataRepository)SpringApplicationContext.getBean("ScheduledExamsDataAccessBean");
 		try {
-			qList=exRep.getSearchedExamsList(userId,levelId,subjectId,examTypeId,dateFrom,dateTo,freeText);
+			qList=exRep.getSearchedExamsList(userId,levelId,subjectId,examTypeId,dateFrom,dateTo,freeText,userRole);
 		    
 		} catch(javax.persistence.NoResultException nr) {
 			qList=null;

@@ -126,7 +126,23 @@
 													<h3 class="w3-left w3-text-blue" id="examSubject">List of questions</h3>
 													<button id='qp-addToPaper' class="w3-button w3-yellow w3-hover-red w3-cell w3-right w3-small">Add to Paper</button>
 	       									   </div>
+       									   
 
+				</div>
+				<div class="w3-container">
+				  
+				<h2>Pagination Color</h2>
+				<p>Add a w3-color class to highlight the page the user is on:</p>
+				
+				<div class="w3-bar">
+				  <a href="#" class="w3-button">«</a>
+				  <a href="#" class="w3-button w3-green">1</a>
+				  <a href="#" class="w3-button">2</a>
+				  <a href="#" class="w3-button">3</a>
+				  <a href="#" class="w3-button">4</a>
+				  <a href="#" class="w3-button">»</a>
+				</div>
+				
 				</div>
   </div>           
 </div>

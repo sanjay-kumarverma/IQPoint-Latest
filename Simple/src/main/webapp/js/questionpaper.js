@@ -21,7 +21,7 @@ $(document).ready(function(){
 				    $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#qps-level');
 				 } else if (userRole=="ROLE_TEACHER" && userLevelName == level.level) {
 					 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#qps-level'); 
-				 } else if (userRole=="ROLE_SUPERUSER"){
+				 } else if (userRole=="ROLE_SUPERUSER" || userRole=='ROLE_ORGANIZATION'){
 					 $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#qps-level'); 
 				 }
 				 
@@ -166,7 +166,9 @@ $(document).ready(function(){
 				$('#'+divid+'ScheduleExam').unbind().click(function(){
 					//getQuestionPaper(paper.id);
 					document.getElementById('qp-scheduleExam').style.display='block';
-					getStudents();
+					
+					if (userRole!="ROLE_STUDENT") // if current user is student, then do not get the student list
+					    getStudents(); //get list of students only in case current user is teacher / admin user
 					
 					$('#qp-butScheduleExamCancel').unbind().click(function(){
 						document.getElementById('qp-scheduleExam').style.display='none';
@@ -258,14 +260,20 @@ $(document).ready(function(){
 					var examData={"userId":userId,"examname":examName,"examdate":examDate,"examduration":examDuration,"examtype":examType,"cummpercent":cummPercent,
 							"paperId":paperId,"students":[]};
 					
-					//adding student ids to object
-					var items=$('#qp-userList').find(':checkbox');
-					var stuindex=0;
-					$.each(items,function(index,stud){
-						if(stud.checked) {
-							examData.students[stuindex]=stud.id; stuindex++;
+					//if current user is student himself then put userid as student
+					if (userRole=="ROLE_STUDENT") {
+						examData.students[0]=userId; }
+					else
+						{
+							//adding student ids to object
+							var items=$('#qp-userList').find(':checkbox');
+							var stuindex=0;
+							$.each(items,function(index,stud){
+								if(stud.checked) {
+									examData.students[stuindex]=stud.id; stuindex++;
+								}
+							});
 						}
-					});
 					
 					console.log(examData);
 					//$.post('resteasy/qb/questionpaper/scheduleExam',examData)
@@ -308,25 +316,29 @@ $(document).ready(function(){
 	    }
 	    
 	    function isExamInfoValid(examName,examDate,examDuration,examType,cummPercent){
-	    	var isvalid=false;
+	    	var isvalid=true;
 	    	
 	    	if(examName.trim() != "" && examDate.trim() !="" && examDuration.trim() != "" && examType.trim != "" && cummPercent.trim() != "" && !isNaN(cummPercent)) {
+	    		//if user role is not student, then there should be list of students and at least one students should
+	    		//be selected
 	    		
-	        	var items=$('#qp-userList').find(':checkbox'); //checking if any student is selected
-
-	   			if (items.length==0)
-	   				{
-                      isvalid=false; 				
-	   				}
-	   			else {
-	   				 var isChkSelected=false;
-	   				 $.each(items,function(index,chkbox){
-	   					 if (chkbox.checked)
-	   						isChkSelected=true;
-	   				 });
-	   				
-		    		  if (isChkSelected) { isvalid = true; } else {isvalid = false;}
-	   			}
+	    		if (userRole!="ROLE_STUDENT") {
+			    		var items=$('#qp-userList').find(':checkbox'); //checking if any student is selected
+		
+			   			if (items.length==0)
+			   				{
+		                      isvalid=false; 				
+			   				}
+			   			else {
+			   				 var isChkSelected=false;
+			   				 $.each(items,function(index,chkbox){
+			   					 if (chkbox.checked)
+			   						isChkSelected=true;
+			   				 });
+			   				
+				    		  if (isChkSelected) { isvalid = true; } else {isvalid = false;}
+			   			}
+	    		}
 
 	    	}
 	    	else {

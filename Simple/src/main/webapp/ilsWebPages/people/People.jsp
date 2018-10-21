@@ -11,7 +11,7 @@
 </head>
 <body>
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-<div class="w3-container"> 
+<div class="w3-container" style="height:100%"> 
 	       <!-- <div id='title' class="w3-panel  w3-light-grey "> -->
 	       <div class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
 				     <div class="w3-cell w3-container w3-cell-middle"><button class="w3-button w3-light-grey w3-xlarge" onclick="w3_open()">&#9776;</button></div><div class="w3-cell w3-container w3-cell-middle"><h2 class="w3-left w3-text-blue"  id="se-title">People</h2></div>
@@ -51,7 +51,7 @@
               
 					<div class="w3-container w3-margin" id="people-list">					
 						<h3 class="w3-left w3-text-blue" id="people-ListTitle">List of people</h3>
-        			</div>
+        			   </div>
            </div>           
 </div>
 

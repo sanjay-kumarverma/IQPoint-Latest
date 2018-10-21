@@ -38,7 +38,7 @@ public class QPTopic implements java.io.Serializable {
 			initialValue=10000,
 			allocationSize=1)	
 	
-	//@Id @GeneratedValue(strategy=GenerationType.TABLE,generator="QPTopics")
+	@Id @GeneratedValue(strategy=GenerationType.TABLE,generator="QPTopics")
 	private Long id;
 	private Long topicId;
 	private Long qpId;

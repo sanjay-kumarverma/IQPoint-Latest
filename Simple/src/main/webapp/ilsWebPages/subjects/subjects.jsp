@@ -18,7 +18,7 @@
 <body>
 
    
-   <div class="w3-container w3-theme-l4"> 
+   <div class="w3-container w3-theme-l4" style="height:100%"> 
         
        <div id='accordian' class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
        

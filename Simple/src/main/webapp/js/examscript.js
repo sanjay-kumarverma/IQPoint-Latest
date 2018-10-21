@@ -76,6 +76,10 @@
 			
 		      
 			var jsonData = JSON.parse(data);
+			//if there are no exams scheduled for the selected subject, show message
+			if (jsonData.length == 0) {
+				$('<p class="w3-xxxlarge w3-text-red w3-center">Sorry, you have no exams scheduled.</p>').insertAfter('#title');
+			}
 			$.each(jsonData,function(index,value){
 				$('<table class="w3-table-all"><tr><td style="width:95%"> <button id="'+value.id+'" class="w3-btn-block w3-left-align w3-leftbar">'+
                         '<span class="w3-small">'+value.exam.toUpperCase()+'</span><span class="w3-text-blue w3-right w3-small">(&nbsp;&nbsp;Exam date :<span class="w3-text-black">'+value.examDate+'</span>&nbsp;&nbsp;Duration :<span class="w3-text-black">'+value.examDuration+'&nbsp;mins</span>&nbsp;&nbsp;Assigned by :<span class="w3-text-black">'+value.updatedBy+'</span>&nbsp;&nbsp;)</span>'+
@@ -297,8 +301,17 @@
             
 			   $(document).unbind().on("click", "td", function() {
 				    var parentRow=$(this).parent();
-				    console.log(parentRow);
-				    var splitstr=$( this ).attr("id").split("-");
+				    //console.log("this is parentrow :"+parentRow);
+				    
+				    var idAttr=$( this ).attr("id");
+				    //console.log("id attr-->"+idAttr);
+				    
+				    //var splitstr=$( this ).attr("id").split("-");
+				    
+				    var splitstr="";
+				    if (idAttr!== undefined)
+				       splitstr=idAttr.split("-");
+				    
 				    if (splitstr[0]=="answer") {
 				    	getAnswerSheet(attempts[splitstr[1]].id);
 				    }
@@ -842,7 +855,7 @@
 		
 		
 		function submitAnswer(answerobj)
-		{   //console.log("coming in submit");
+		{   console.log("answer object-->"+answerobj);
 		    //console.log("Question Pointer --->"+qpointer);
 			//$('#questionForm').one('submit',function(e) {
 
@@ -1007,6 +1020,7 @@
 				   });
 			  }
         	else if (jsonQuestion.questionType=="4") {
+        		
         		$('#qanswer').focus();
         		$('#qanswer').blur(function(){
         			

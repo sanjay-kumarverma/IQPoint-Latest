@@ -43,8 +43,9 @@ public class FileUploadService {
 	//private final String UPLOADED_QUESTION_FILE_PATH = "D:\\workspace\\DevelopmentWS\\Simple\\src\\main\\webapp\\files\\questions\\";
 	//private final String UPLOADED_PROFILE_FILE_PATH ="C:\\Users\\sanjay.verma\\git\\IQPoint\\Simple\\src\\main\\webapp\\files";
 	//private final String UPLOADED_QUESTION_FILE_PATH = "C:\\Users\\sanjay.verma\\git\\IQPoint\\Simple\\src\\main\\webapp\\files\\questions\\";
-	private final String UPLOADED_PROFILE_FILE_PATH ="/home/sanjay/git/Simple/files/";
-	private final String UPLOADED_QUESTION_FILE_PATH = "/home/sanjay/git/Simple/files/questions/";
+	private final String UPLOADED_PROFILE_FILE_PATH ="/Users/sanjayverma/git/simple/Simple/src/main/webapp/files/";
+	private final String UPLOADED_QUESTION_FILE_PATH = "/Users/sanjayverma/git/simple/Simple/src/main/webapp/files/questions/";
+
 	
 	@POST
 	@Path("/upload/user/{userid}")

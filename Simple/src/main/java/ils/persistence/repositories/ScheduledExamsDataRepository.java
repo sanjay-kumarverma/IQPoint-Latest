@@ -38,11 +38,15 @@ public class ScheduledExamsDataRepository {
 	
 	 
 	 @Transactional(readOnly=true) 
-	 public List<ExamPlainV2> getSearchedExamsList(String userId,String levelId, String subjectId, String paperTypeId, String dateFrom, String dateTo, String freeText) throws Exception
+	 public List<ExamPlainV2> getSearchedExamsList(String userId,String levelId, String subjectId, String paperTypeId, String dateFrom, String dateTo, String freeText, String userRole) throws Exception
 	 {
 		 
 			//Prepare the search query
-			String searchStr="select e from Exam e, QuestionPaper q where e.questionPaper.id = q.id and q.levelId="+levelId+" and q.subjectId="+subjectId+" and e.recordStatus.updatedBy="+userId;
+		    String searchStr="";
+            if (userRole.equals("ROLE_ORGANIZATION"))
+		      	searchStr="select e from Exam e, QuestionPaper q, User u where e.questionPaper.id = q.id and u.id=e.recordStatus.updatedBy and q.levelId="+levelId+" and q.subjectId="+subjectId;
+		    else
+			    searchStr="select e from Exam e, QuestionPaper q where e.questionPaper.id = q.id and q.levelId="+levelId+" and q.subjectId="+subjectId;
 			
 			if (!dateFrom.equals("") && dateTo.equals("")) {
 				searchStr+=" and e.recordStatus.updatedOn >= '"+dateFrom+"'"; 
@@ -56,7 +60,12 @@ public class ScheduledExamsDataRepository {
 				searchStr+=" and upper(e.exam) like '%"+freeText+"%'";
 			}
 			
-			searchStr+=" and e.recordStatus.updatedBy ="+userId+" and e.recordStatus.isDeleted is false order by e.recordStatus.updatedOn desc";
+			if (userRole.equals("ROLE_ORGANIZATION"))
+			   searchStr+=" and u.recordStatus.updatedBy ="+userId+" and e.recordStatus.isDeleted is false order by e.recordStatus.updatedOn desc";
+			else if (userRole.equals("ROLE_ADMIN"))
+			   searchStr+=" and e.recordStatus.isDeleted is false order by e.recordStatus.updatedOn desc";
+			else
+				searchStr+=" and e.recordStatus.updatedBy ="+userId+" and e.recordStatus.isDeleted is false order by e.recordStatus.updatedOn desc";
 			
 		     TypedQuery<Exam> qry = em.createQuery(searchStr,Exam.class);
 			 List<Exam> examList = qry.getResultList();

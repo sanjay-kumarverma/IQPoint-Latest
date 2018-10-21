@@ -1,6 +1,7 @@
 package ils.persistence.repositories;
 
 import ils.json.UserPlainV2;
+import ils.persistence.domainclasses.Level;
 import ils.persistence.domainclasses.Role;
 import ils.persistence.domainclasses.User;
 import ils.persistence.domainclasses.embeddables.RecordStatus;
@@ -107,6 +108,7 @@ public class PeopleDataRepository {
 				 UserPlainV2 up = new UserPlainV2();
 				 
 				 up.setId(user.getId().toString());
+				 up.setPhotoUrl(user.getUserProfile().getPhotoUrl());
 				 up.setFirstName(user.getFirstName().toString());
 				 up.setLastName(user.getLastName().toString());
 				 up.setEmail(user.getEmail());
@@ -134,6 +136,29 @@ public class PeopleDataRepository {
 		 
 		 //setting role
 		 user.setRole(role);
+		 
+		 //prepare plain object
+		 UserPlainV2 up = new UserPlainV2();
+		 up.setId(user.getId().toString());
+		 
+		 return up;
+		 
+		 
+		 
+	 }
+	 
+	 @Transactional
+	 public UserPlainV2 updateUserLevel(String userid, String levelid) throws Exception
+	 {
+		 TypedQuery<User> qry = em.createNamedQuery("User.findById",User.class);
+		 qry.setParameter("id", new Long(userid));
+		 
+		 User user=qry.getSingleResult();
+		 
+		 
+		 //setting user level
+		 Level userLevel = em.find(Level.class, new Long(levelid));
+		 user.setUserLevel(userLevel);
 		 
 		 //prepare plain object
 		 UserPlainV2 up = new UserPlainV2();

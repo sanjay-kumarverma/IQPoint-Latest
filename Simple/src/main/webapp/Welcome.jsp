@@ -9,8 +9,8 @@
  			<link rel="stylesheet" href="css/w3.css">	
 			<link rel="stylesheet" href="css/w3-theme-indigo.css">
 			<link rel="stylesheet" href="css/spinner.css">
-			<!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+			<link rel="stylesheet" href="css/font-awesome.min.css">
+			<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 			<link href="css/jstree_default/style.min.css" rel="stylesheet" type="text/css" />
 			<script src="lib/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 			
@@ -141,10 +141,10 @@
 					           <li data-jstree='{"icon" : "icons/people.png"}' id="People">People</li>	
 					           <li data-jstree='{"icon" : "icons/masters.png"}' id="Masters">Masters
 					                <ul id="masterlist">
-					                   <li>Class / Level</li>
-					                   <li>Subject & Topic</li>
-					                   <li>Exam type</li>
-					                   <li>Question type</li>
+					                   <li data-jstree='{"icon" : "icons/people.png"}' id="ClassLevel">Class / Level</li>
+					                   <li data-jstree='{"icon" : "icons/people.png"}' id="Subject">Subject & Topic</li>
+					                   <li data-jstree='{"icon" : "icons/people.png"}' id="ExamType">Exam type</li>
+					                   <li data-jstree='{"icon" : "icons/people.png"}' id="QuestionType">Question type</li>
 					                </ul>
 					           </li>
 					        </ul>

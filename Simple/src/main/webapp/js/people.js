@@ -14,6 +14,7 @@ $(document).ready(function() 	{
 	
 	
 	function populateRoles() {
+		$('#people-role > option').remove();
 		
 		 var selectStr="";
 		 
@@ -37,7 +38,7 @@ $(document).ready(function() 	{
 		}
 	
 	function populateLevel() {
-		$('#level > option').remove();
+		$('#people-level > option').remove();
 		$.get('resteasy/qb/questionbank/levels')
 		 .done(function(levels){
 			 var jsonLevels = JSON.parse(levels);
@@ -77,7 +78,8 @@ $(document).ready(function() 	{
      
      $('#people-butCreateUser').unbind().click(function(){
     	 
-    	 
+    	        $('#people-registerAs > option').remove();
+    	        
 	 		if (userRole=="ROLE_TEACHER") {
 				selectStr="<option value='' disabled selected>Choose user role</option>"+
 						  "<option value='Student'>Student</option>";
@@ -275,14 +277,38 @@ $(document).ready(function() 	{
 		 
 	 }
 	 
+	 function setPhotoStr(index,photoUrl) {
+	
+	    console.log(photoUrl);
+		 var photoStr="";
+		 if (photoUrl===null) {
+				photoStr='<img id='+"userPhoto"+index+' src="files/DefaultUser.jpg" style="width:50%" />';
+		    }
+		 else {
+			 photoStr='<img id='+"userPhoto"+index+' src='+"files/"+photoUrl+' style="width:50%" />'; 
+		 }
+//					'style="width:10%; cursor: zoom-in"'+
+//					'onclick="document.getElementById('+"modal01"+index+').style.display='+'"block">';
+//				  '<div id='+"modal01"+index+' class="w3-modal"'+
+//					'onclick="this.style.display='+'"none">'+
+//					'<span'+
+//						'class="w3-closebtn w3-hover-red w3-container w3-padding-16 w3-display-topright">&times;</span>'+
+//					'<div class="w3-modal-content w3-animate-zoom">'+
+//						'<img id="up-zoom-userPhoto" src="" style="width:100%">'+
+//					'</div>'+
+//				'</div>'+
+//			'</div>';
+		 
+		return photoStr; 
+	 }
 	 
 	 function preparePeopleList(ppldata) {
-
+		 //console.log(ppldata.photoUrl);
 	     $('#people-list > table').remove();
 			//var jsonData = JSON.parse(data);
-	        var peopleStr='<table id="people-list-table" class="w3-table-all w3-hoverable w3-small"><tr><th>Name</th><th>Email</th><th>Phone</th><th>Updated On</th><th>Updated By</th><th></th></tr>';
+	        var peopleStr='<table id="people-list-table" class="w3-table-all w3-hoverable w3-small"><tr><th>Photo</th><th>Name</th><th>Email</th><th>Phone</th><th>Updated On</th><th>Updated By</th><th></th></tr>';
 			$.each(ppldata,function(index,value){
-				peopleStr+= '<tr id="tr-'+value.id+'"><td class="w3-small">'+value.firstName.toUpperCase()+'&nbsp;'+value.lastName.toUpperCase()+'</td>';
+				peopleStr+= '<tr id="tr-'+value.id+'"><td class="w3-small" style="width:10%;height:10%">'+setPhotoStr(index,value.photoUrl)+'</td>'+'<td class="w3-small">'+value.firstName.toUpperCase()+'&nbsp;'+value.lastName.toUpperCase()+'</td>';
 				peopleStr+= '<td>'+value.email+'</td><td>'+value.phone+'</td><td>'+value.updateDate+'</td><td>'+value.updateBy+'</td><td><span id=view-'+value.id+'><i class="fa fa-eye"></i></span></td></tr>';
 				});	
 			peopleStr+='</table>';
@@ -322,10 +348,39 @@ $(document).ready(function() 	{
 	          });
 	 }
 	 
+		function populateLevelForDetails(levelid) {
+			$('#peopledetails-level > option').remove();
+			$.get('resteasy/qb/questionbank/levels')
+			 .done(function(levels){
+				 var jsonLevels = JSON.parse(levels);
+				 $('<option value="" disabled>Choose Class/Level</option>').appendTo('#peopledetails-level');
+				 $.each(jsonLevels,function(index,level) {
+					 if (level.id===levelid) {
+					   $('<option value="'+level.id+'" selected>'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#peopledetails-level');						 
+					 } else {
+					   $('<option value="'+level.id+'">'+level.levelName+' ( '+level.level+' ) </option>').appendTo('#peopledetails-level');
+					 }
+				 });
+			 })
+			 .fail(function(){
+		           var msg='<p>There was some problem getting classes / levels information. Please retry after some time.</p>';
+		           $('#people-errorMessage > p').remove();
+		           $(msg).appendTo('#people-errorMessage');	 	        	  
+		 	       document.getElementById('error').style.display='block';				
+			});
+			
+		}
+	 
 	 function displayDetails(userData) {
 		 
+		    //console.log(userData);
+		    
 			var userStr='<table id="people-detailsTable" class="w3-table-all w3-small w3-center w3-border">';
-			 userStr+='<tr><td><label class="w3-label w3-text-blue">Name</label></td><td colspan="3">'+userData.firstName+'&nbsp;'+userData.lastName+'</td><td ><label class="w3-label w3-text-blue">Level</label></td><td>'+userData.userLevel.level+'('+userData.userLevel.levelName+') </td></tr>';
+			 userStr+='<tr><td><label class="w3-label w3-text-blue">Name</label></td><td colspan="3">'+userData.firstName+'&nbsp;'+userData.lastName+'</td><td ><label class="w3-label w3-text-blue">Level</label></td>'+
+			 //'<td>'+userData.userLevel.level+'('+userData.userLevel.levelName+') </td></tr>';
+			 '<td><select class="w3-select" id="peopledetails-level"></select><td><span id="levelMsg" class="w3-text-red"></span></td></td></tr>';
+             
+			 
 			 userStr+='<tr><td><label class="w3-label w3-text-blue">Email</label></td><td colspan="2">'+userData.email+'</td><td><label class="w3-label w3-text-blue">Phone</label></td><td colspan="2">'+userData.phone+'</td></tr>';
 			 if (userData.address.street.trim().toUpperCase()=="NOT AVAILABLE") {
 			       userStr+='<tr><td><label class="w3-label w3-text-blue">Address</label></td><td colspan="4">'+userData.address.street+'</td></tr>';
@@ -357,19 +412,64 @@ $(document).ready(function() 	{
 
 			 }
 			 
-			 userStr+='<tr><td colspan="6" class="w3-center"><button id="people-butPromote" class="w3-button w3-yellow w3-small w3-hover-red w3-margin">Promote</button><button id="people-butOk" class="w3-button w3-yellow w3-small w3-hover-red w3-margin">Close</button></td></tr>';
+			 userStr+='<tr><td colspan="6" class="w3-center">';
+			 userStr+='<button id="people-butPromote" class="w3-button w3-yellow w3-small w3-hover-red w3-margin">Promote</button>';
+			 userStr+='<button id="people-butUpdateLevel" class="w3-button w3-yellow w3-small w3-hover-red w3-margin">Update Level</button>';
+			 userStr+='<button id="people-butOk" class="w3-button w3-yellow w3-small w3-hover-red w3-margin">Close</button></td></tr>';
 			 userStr+='</table>';
 			 
 			 $('#people-detailsInfo > table').remove();
 			 $(userStr).appendTo('#people-detailsInfo');
 			 
+			 //after details is appended to DOM populate levels
+			 populateLevelForDetails(userData.userLevel.id);
+			 
 			 document.getElementById('people-viewDetails').style.display='block';
 			 $('#people-butPromote').attr('disabled','disabled');
+			 $('#people-butUpdateLevel').attr('disabled','disabled');
 			 
 			 $('#people-butOk').unbind().click(function(){
 				 document.getElementById('people-viewDetails').style.display='none';
 				 
 			 });
+			 
+			 $('#peopledetails-level').unbind().change(function(){
+				 $('#people-butUpdateLevel').removeAttr('disabled'); 
+			 });
+			 
+			 $('#people-butUpdateLevel').unbind().click(function(){
+				 var newLevel=$('#peopledetails-level option:selected').val();
+				 console.log(newLevel);
+				 if (newLevel=="") {
+                    $('#levelMsg').html('Please select level first.');				 
+				 } else {
+					 $('#promoteMsg').html('');
+					 var _csrf = $("input[name='_csrf']").val();
+					 var levelData={"userid":userData.id,"level":newLevel,"_csrf":_csrf};
+					 console.log(levelData);
+					 $.post("resteasy/qb/people/updateLevel",levelData)
+			              .done( function(data,status,xhr){ 
+			            	       document.getElementById('people-viewDetails').style.display='none';
+			            	       
+			            	       //$('#tr-'+userData.id).remove();
+			            	       
+			      		           var msg='<p>User level was changed successfully.</p>';
+			    		           $('#people-alertMessage > p').remove();
+			    		           $(msg).appendTo('#people-alertMessage');	 	        	  
+			    		 	       document.getElementById('alert').style.display='block';  
+				                   })
+				          .fail(function(data,status,xhr){
+				        	   document.getElementById('people-viewDetails').style.display='none';
+					           var msg='<p>There was some problem updating level of selected user. Please retry after some time.</p>';
+					           $('#people-errorMessage > p').remove();
+					           $(msg).appendTo('#people-errorMessage');	 	        	  
+					 	       document.getElementById('error').style.display='block';
+				        	  
+				          });					 
+					 
+				 }
+				 
+			 });	
 			 
 			 $('#promote-role').unbind().change(function(){
 				 $('#people-butPromote').removeAttr('disabled'); 
